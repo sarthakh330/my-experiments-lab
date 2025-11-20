@@ -48,19 +48,19 @@ describe('Projects Data Validation', () => {
       });
     });
 
-    it('should not have links to localhost ports other than the dev server', () => {
+    it('should not have links to localhost ports without external flag', () => {
       const invalidLocalhostPattern = /localhost:\d{4}/;
 
       projects.forEach((project) => {
         if (invalidLocalhostPattern.test(project.link)) {
-          // If it's a localhost link, it should explicitly be marked as external
-          // or the test should fail
-          throw new Error(
-            `Project "${project.title}" links to external localhost (${project.link}). ` +
-            `This will cause "connection refused" errors. ` +
-            `Either host the project in the /public directory with a relative link, ` +
-            `or remove the project until the external server is available.`
-          );
+          // If it's a localhost link, it must be marked as external
+          if (!project.external) {
+            throw new Error(
+              `Project "${project.title}" links to external localhost (${project.link}) but is not marked as external. ` +
+              `Add "external: true" to the project definition to indicate it requires a separate server, ` +
+              `or host the project in the /public directory with a relative link.`
+            );
+          }
         }
       });
     });
