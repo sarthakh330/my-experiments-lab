@@ -11,6 +11,32 @@ My Experiments Lab is a portfolio-style web application that features:
 - **Project Viewer** - Embedded iframe viewer for instant demos
 - **Responsive Design** - Works seamlessly across devices
 
+## Screenshots & Demo
+
+### Main Gallery View
+![Main Gallery](screenshots/main-gallery.png)
+*The home page showcasing the featured experiment and dynamic grid of all projects*
+
+### Interactive Project Viewer
+![Project Viewer](screenshots/project-viewer.gif)
+*Click any project card to view it in the embedded iframe viewer - no page reloads needed!*
+
+### Filter & Browse Experience
+![Filter Experience](screenshots/filter-demo.gif)
+*Seamlessly filter experiments by tags and categories*
+
+### Sample Experiments
+
+#### Dragon Flight Game
+![Dragon Flight](screenshots/dragon-flight.gif)
+*Navigate through obstacles in this engaging flight simulator*
+
+#### Platformer Game
+![Platformer](screenshots/platformer.gif)
+*Classic platformer mechanics with smooth controls*
+
+> **Note**: Visit [http://localhost:5173](http://localhost:5173) after running `npm run dev` to see the full experience!
+
 ## Features
 
 - 🎨 Modern, clean UI with smooth animations
@@ -39,7 +65,7 @@ My Experiments Lab is a portfolio-style web application that features:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/my-experiments-lab.git
+git clone https://github.com/sarthakh330/my-experiments-lab.git
 
 # Navigate to project directory
 cd my-experiments-lab
