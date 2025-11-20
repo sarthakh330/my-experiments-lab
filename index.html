@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Experiments Lab</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 19H22L12 2Z" fill="currentColor" />
+      </svg>
+      Experiments Lab
+    </div>
+    <nav>
+      <a href="#">About</a>
+      <a href="#">Experiments</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Home for AI experiments</h1>
+
+    <!-- Featured Section -->
+    <section class="hero" id="featured-container">
+      <!-- Injected by JS -->
+    </section>
+
+    <!-- Experiments Grid -->
+    <section class="experiments">
+
+      <div class="filters" id="filters-container">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="grid" id="grid-container">
+        <!-- Injected by JS -->
+      </div>
+    </section>
+
+    <!-- Project Viewer Overlay -->
+    <div id="project-viewer" class="viewer-overlay hidden">
+      <div class="viewer-header">
+        <button id="close-viewer" class="btn-close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Back to Gallery
+        </button>
+        <span id="viewer-title" class="viewer-title"></span>
+      </div>
+      <iframe id="project-frame" src=""></iframe>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Experiments Lab. Built with Vite.</p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
