@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:video": "cd '../video intelligence agent' && npm run dev",
+    "dev:all": "concurrently -n \"DASHBOARD,VIDEO-AI\" -c \"cyan,magenta\" \"npm run dev\" \"npm run dev:video\"",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "jsdom": "^27.0.1",
     "vite": "^7.2.2",
     "vitest": "^3.2.4"

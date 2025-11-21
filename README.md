@@ -77,11 +77,15 @@ npm install
 ### Development
 
 ```bash
-# Start the development server
+# Start ALL servers (dashboard + video-intelligence-agent)
+npm run dev:all
+
+# Or just the dashboard
 npm run dev
 ```
 
-Open your browser and navigate to `http://localhost:5173`
+- Dashboard opens at `http://localhost:5173`
+- Video Intelligence Agent runs at `http://localhost:3000` (when using dev:all)
 
 ### Build
 
@@ -102,15 +106,19 @@ npm test
 ```
 my-experiments-lab/
 ├── src/
-│   ├── main.js          # Main application logic
+│   ├── main.js          # Main application logic with error handling
 │   ├── data.js          # Projects data and configuration
 │   ├── style.css        # Application styles
-│   ├── counter.js       # Example counter module
-│   └── main.test.js     # Unit tests
+│   ├── particles.js     # Particle background effects
+│   └── *.test.js        # Unit tests
 ├── public/
-│   ├── dragon-flight/   # Dragon flight game demo
-│   ├── platformer/      # Platformer game demo
-│   └── placeholder.html # Placeholder template
+│   ├── experiments/     # All experiments live here (monorepo)
+│   │   ├── dragon-flight/           # Dragon flight game
+│   │   ├── platformer/              # Platformer game
+│   │   ├── particle-background/    # GPU particle demo
+│   │   └── video-intelligence-agent/ # Video AI agent
+│   ├── placeholder.html # Placeholder template
+│   └── vite.svg         # Assets
 ├── index.html           # Main HTML entry point
 ├── package.json         # Project dependencies
 └── .gitignore          # Git ignore rules
@@ -118,7 +126,7 @@ my-experiments-lab/
 
 ## Adding New Experiments
 
-1. Add your experiment files to the `public/` directory
+1. Add your experiment files to the `public/experiments/your-experiment-name/` directory
 2. Update `src/data.js` with your project information:
 
 ```javascript
@@ -127,14 +135,15 @@ my-experiments-lab/
   title: 'Your Project Title',
   description: 'Brief description',
   tags: ['tag1', 'tag2'],
-  link: '/public/your-project/',
+  link: '/experiments/your-experiment-name/',
   colorTheme: 'theme-color',
   featured: false,
+  external: false, // false = opens in viewer, true = opens in new tab
   visual: '<!-- Your SVG or HTML visual -->'
 }
 ```
 
-3. Run the dev server to see your changes
+3. Run `npm run dev` - No separate servers needed! Everything runs on one port (5173)
 
 ## Contributing
 

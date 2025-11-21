@@ -1,7 +1,27 @@
 import { projects } from './data.js';
+import { initParticles } from './particles.js';
+
+// Debug logger with timestamp
+const debug = {
+  log: (...args) => console.log(`[Lab ${new Date().toLocaleTimeString()}]`, ...args),
+  error: (...args) => console.error(`[Lab ERROR ${new Date().toLocaleTimeString()}]`, ...args),
+  warn: (...args) => console.warn(`[Lab WARN ${new Date().toLocaleTimeString()}]`, ...args),
+  info: (...args) => console.info(`[Lab INFO ${new Date().toLocaleTimeString()}]`, ...args)
+};
 
 export function renderFeatured(project, container) {
-  if (!project || !container) return;
+  if (!project) {
+    debug.error('renderFeatured: No project provided');
+    return;
+  }
+  if (!container) {
+    debug.error('renderFeatured: Container element not found');
+    return;
+  }
+
+  debug.log(`Rendering featured project: ${project.title}`);
+
+  const targetAttr = project.external ? 'target="_blank"' : '';
 
   container.innerHTML = `
     <div class="featured-card">
@@ -9,7 +29,7 @@ export function renderFeatured(project, container) {
         <span class="card-tag">FEATURED</span>
         <h1>${project.title}</h1>
         <p>${project.description}</p>
-        <a href="${project.link}" target="_blank" class="btn btn-primary">Try It Now</a>
+        <a href="${project.link}" ${targetAttr} class="btn btn-primary">Try It Now</a>
       </div>
       <div class="featured-visual">
         ${project.visual}
@@ -19,36 +39,75 @@ export function renderFeatured(project, container) {
 }
 
 export function renderGrid(projectsList, container) {
-  if (!projectsList || !container) return;
+  if (!projectsList || projectsList.length === 0) {
+    debug.warn('renderGrid: No projects to render');
+    return;
+  }
+  if (!container) {
+    debug.error('renderGrid: Container element not found');
+    return;
+  }
 
-  container.innerHTML = projectsList.map(project => `
-    <a href="${project.link}" target="_blank" class="card theme-${project.colorTheme}">
-      <div class="card-content">
-        <div style="display: flex; justify-content: space-between; align-items: start;">
-           <span class="card-tag">${project.tags[0].toUpperCase()}</span>
-        </div>
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
-      </div>
-      <div class="card-visual">
-         ${project.visual}
-      </div>
-      <div class="btn-card-wrapper">
-        <span class="btn-card">Try It Now</span>
-      </div>
-    </a>
-  `).join('');
+  debug.log(`Rendering ${projectsList.length} projects in grid`);
+
+  try {
+    container.innerHTML = projectsList.map(project => {
+      const targetAttr = project.external ? 'target="_blank"' : '';
+      return `
+        <a href="${project.link}" ${targetAttr} class="card theme-${project.colorTheme}">
+          <div class="card-content">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+               <span class="card-tag">${project.tags[0].toUpperCase()}</span>
+            </div>
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+          </div>
+          <div class="card-visual">
+             ${project.visual}
+          </div>
+          <div class="btn-card-wrapper">
+            <span class="btn-card">Try It Now</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+  } catch (error) {
+    debug.error('renderGrid: Failed to render projects', error);
+  }
 }
 
 // Initialize
 export function init() {
+  debug.info('🚀 Initializing My Experiments Lab...');
+  debug.log(`Loaded ${projects.length} projects from data.js`);
+
   const featuredContainer = document.getElementById('featured-container');
   const gridContainer = document.getElementById('grid-container');
   const filtersContainer = document.getElementById('filters-container');
 
-  if (featuredContainer && gridContainer && filtersContainer) {
+  if (!featuredContainer) {
+    debug.error('Init failed: featured-container element not found');
+    return;
+  }
+  if (!gridContainer) {
+    debug.error('Init failed: grid-container element not found');
+    return;
+  }
+  if (!filtersContainer) {
+    debug.error('Init failed: filters-container element not found');
+    return;
+  }
+
+  try {
     const featuredProject = projects.find(p => p.featured) || projects[0];
     const otherProjects = projects; // Show all projects in grid
+
+    if (!featuredProject) {
+      debug.error('No featured project found and no projects available');
+      return;
+    }
+
+    debug.log(`Featured project: ${featuredProject.title}`);
 
     renderFeatured(featuredProject, featuredContainer);
     renderGrid(otherProjects, gridContainer);
@@ -76,89 +135,26 @@ export function init() {
       }
     });
 
-    // Viewer Logic
-    const viewer = document.getElementById('project-viewer');
-    const frame = document.getElementById('project-frame');
-    const closeBtn = document.getElementById('close-viewer');
-    const viewerTitle = document.getElementById('viewer-title');
+    debug.info('✅ Initialization complete!');
 
-    function openProject(project) {
-      viewerTitle.textContent = project.title;
-      frame.src = project.link;
-      viewer.classList.remove('hidden');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    }
-
-    function closeProject() {
-      viewer.classList.add('hidden');
-      frame.src = ''; // Stop content
-      document.body.style.overflow = '';
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeProject);
-    }
-
-    // Auto-hide header logic
-    let hideHeaderTimeout;
-    const viewerHeader = document.querySelector('.viewer-header');
-
-    function showHeader() {
-      if (viewerHeader) {
-        viewerHeader.classList.remove('hidden-ui');
-      }
-    }
-
-    function scheduleHideHeader() {
-      clearTimeout(hideHeaderTimeout);
-      hideHeaderTimeout = setTimeout(() => {
-        if (viewerHeader && !viewer.classList.contains('hidden')) {
-          viewerHeader.classList.add('hidden-ui');
-        }
-      }, 3000); // Hide after 3 seconds of inactivity
-    }
-
-    // Show header when mouse moves to top 100px or when mouse moves
-    viewer.addEventListener('mousemove', (e) => {
-      if (e.clientY < 100) {
-        showHeader();
-        scheduleHideHeader();
-      } else {
-        // Show briefly on any movement, then schedule hide
-        showHeader();
-        scheduleHideHeader();
-      }
-    });
-
-    // Show header when viewer opens
-    viewer.addEventListener('transitionend', () => {
-      if (!viewer.classList.contains('hidden')) {
-        showHeader();
-        scheduleHideHeader();
-      }
-    });
-
-    // Delegate clicks for projects
-    document.addEventListener('click', (e) => {
-      // Check if clicked element is a project link/button or inside one
-      const target = e.target.closest('a[href]');
-
-      // Only handle clicks on project links within the main element
-      if (target && target.closest('main') && !e.target.closest('.card-tag')) {
-        const link = target.getAttribute('href');
-        const project = projects.find(p => p.link === link);
-
-        if (project && !project.external) {
-          // Only open non-external projects in the viewer
-          // External projects will use their default target="_blank" behavior
-          e.preventDefault();
-          e.stopPropagation(); // Prevent event bubbling
-          openProject(project);
-        }
-        // If project.external is true, let the default link behavior happen (open in new tab)
-      }
-    }, { capture: true }); // Use capture phase to catch events early
+  } catch (error) {
+    debug.error('❌ Fatal initialization error:', error);
+    throw error; // Re-throw to see stack trace
   }
 }
 
-init();
+// Start the app
+try {
+  init();
+} catch (error) {
+  debug.error('Failed to initialize app:', error);
+}
+
+// Initialize particle parallax background
+try {
+  debug.log('Initializing particle background...');
+  initParticles();
+  debug.info('✓ Particle background initialized');
+} catch (error) {
+  debug.error('Failed to initialize particles:', error);
+}

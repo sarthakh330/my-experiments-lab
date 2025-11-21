@@ -51,10 +51,29 @@
             border-radius: 6px;
             font-size: 12px;
         }
+
+        .back-to-lab {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            z-index: 9999;
+            transition: background 0.2s;
+        }
+        .back-to-lab:hover {
+            background: rgba(0, 0, 0, 0.95);
+        }
     </style>
 </head>
 
 <body>
+    <a href="/" class="back-to-lab">← Back to Lab</a>
 
     <div id="ui-layer">
         <span><span class="key">←</span> <span class="key">→</span> Move</span>

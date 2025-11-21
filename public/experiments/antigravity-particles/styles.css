@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #02030a; /* Dark cinematic background similar to Antigravity */
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+.back-to-lab {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
+  transition: background 0.2s;
+}
+
+.back-to-lab:hover {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.overlay-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.9); /* Premium light text on dark background */
+}
+
+.overlay-content h1 {
+  font-size: 2.5rem; /* Slightly smaller, more subtle */
+  font-weight: 200; /* Lighter weight for premium feel */
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.05em; /* Slight letter spacing for elegance */
+}
+
+.overlay-content p {
+  font-size: 1rem; /* Reduced from 1.2rem */
+  color: rgba(255, 255, 255, 0.6); /* More subtle */
+  margin-bottom: 0.5rem;
+  font-weight: 300;
+}
+
+.overlay-content .hint {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4); /* Very subtle hint text */
+  margin-top: 2rem;
+  font-weight: 300;
+}

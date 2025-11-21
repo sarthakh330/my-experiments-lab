@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity Particles - GPGPU</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="/" class="back-to-lab">← Back to Lab</a>
+
+  <div id="canvas-container"></div>
+
+  <div class="overlay-content">
+    <h1>Antigravity Particles</h1>
+    <p>GPU-accelerated particle system with GPGPU compute</p>
+    <p class="hint">Move your mouse to interact with particles</p>
+  </div>
+
+  <!-- Three.js from CDN -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
