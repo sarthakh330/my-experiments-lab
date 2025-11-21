@@ -148,11 +148,14 @@ export function init() {
         const link = target.getAttribute('href');
         const project = projects.find(p => p.link === link);
 
-        if (project) {
+        if (project && !project.external) {
+          // Only open non-external projects in the viewer
+          // External projects will use their default target="_blank" behavior
           e.preventDefault();
           e.stopPropagation(); // Prevent event bubbling
           openProject(project);
         }
+        // If project.external is true, let the default link behavior happen (open in new tab)
       }
     }, { capture: true }); // Use capture phase to catch events early
   }
